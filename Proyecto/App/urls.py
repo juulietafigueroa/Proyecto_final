@@ -3,9 +3,9 @@ from App.views import home, Historia_comunidad, Actividades_comunidad, Informaci
 
 urlpatterns = [
     path('', home ),
-    path('Historia_comunidad', Historia_comunidad  ),
-    path('Actividades_comunidad', Actividades_comunidad ),
-    path('Informacion_sobre_mi', Informacion_sobre_mi ),
+    path('Historia_comunidad/', Historia_comunidad  ),
+    path('Actividades_comunidad/', Actividades_comunidad ),
+    path('Informacion_sobre_mi/', Informacion_sobre_mi ),
 
 
     
