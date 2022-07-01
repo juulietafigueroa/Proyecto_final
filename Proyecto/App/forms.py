@@ -1,12 +1,12 @@
 from django import forms 
 
-class Mochilas(forms.Form):
+class MochilasFormulario(forms.Form):
     #texto  = forms.TextField()
     #imagen = models.ImageField()
     descripcion = forms.CharField(max_length=1000)
     precio= forms.IntegerField()
 
-class Totebags (forms.Form):
+class TotebagsFormulario (forms.Form):
     #texto  = forms.TextField()
     #imagen = models.ImageField()
     descripcion = forms.CharField(max_length=1000)
@@ -18,4 +18,6 @@ class Informacion_sobre_mi(forms.Form):
     #imagen = models.ImageField()
     #texto  = forms.TextField()
     fecha= forms.DateField()
+
+
     

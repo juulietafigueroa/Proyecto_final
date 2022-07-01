@@ -1,11 +1,11 @@
 {% extends "app/padre.html" %}
 {% load static %}
 {% block contenidoQueCambia %}
-<h3> Formulario para mochilas </h3>
+<h3> Formulario para tote bags (bolsos) </h3>
 {% endblock%}
 {% block section_name %}
-<form action="{% url 'formularioMochilas' %}" method="post">{% csrf_token %}
-    <h1> Ingrese los datos de mochilas </h1>
+<form action="{% url 'formularioTotebags' %}" method="post">{% csrf_token %}
+    <h1> Ingrese los datos de tote bags  </h1>
      
         {{ miFormulario.as_p }}
     <input type="submit" value="Enviar formulario con la app"><!-- el input de tipo submit es el que envia los datos-->
