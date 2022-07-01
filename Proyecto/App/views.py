@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from App.forms import Mochilas, Totebags, Informacion_sobre_mi  
 
 # Create your views here.
 
@@ -9,23 +10,27 @@ def home(self):
     documento = plantila.render()
     return HttpResponse(documento)
 
-def Historia_comunidad(request):
-    return render(request, 'app/Historia_comu.html')
+def Mochilas(request):
+    return render(request, 'app/mochilas.html')
 
-#def Historia_comunidad(self):
- #   documento = f"Página para historia de la comunidad"
-  #  return HttpResponse(documento)
 
-#def Actividades_comunidad(request):
- #   return render(request, 'App/Actividades_comu.html')
+def Totebags(request):
+    return render(request, 'App/totebags.html')
 
-def Actividades_comunidad(self):
-    documento = f"Página para actividades de la comunidad"
-    return HttpResponse(documento)
 
-#def Informacion_sobre_mi(request):
- #  return render(request, 'App/Informacion_sobre_mi.html')
+def Informacion_sobre_mi(request):
+   return render(request, 'App/Informacion_sobre_mi.html')
 
-def Informacion_sobre_mi(self):
-    documento = f"Página para Informacion_sobre_mi"
-    return HttpResponse(documento)
+def formulario_mochilas(request):
+    if request.method == 'POST':
+        miFormulario = formulario_historia_comunidad(request.POST)
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+         
+        precio = informacion['precio']
+        descripcion = informacion['descripcion']
+        formulario_historia_comunidad = formulario_historia_comunidad( descripcion=descripcion, precio=precio)
+        formulario_historia_comunidad.save()
+        return render(request, 'app/home.html')
+    return render(request, 'app/formulario_mochilas.html')
+

@@ -1,0 +1,15 @@
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3> Formulario para historia de la comunidad </h3>
+{% endblock%}
+{% block section_name %}
+<form action="{% url 'formulario_historia_comunidad' %}" method="post">{% csrf_token %}
+    <h1> Ingrese los datos de historia de la comunidad </h1>
+    <p> Texto: <input type="text" name="texto"> </p> <!-- p es de parragraf-->
+    <p> Autor: <input type="text" name="autor"> </p>
+    <p> Fecha: <input type="text" name="fecha"> </p>
+    <input type="submit" value="Enviar"><!-- el input de tipo submit es el que envia los datos-->
+
+</form>
+{% endblock %}

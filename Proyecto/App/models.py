@@ -4,32 +4,26 @@ from django.db import models
 
 # Create your models here.
 
-class Historia_comunidad(models.Model):
-    texto  = models.TextField()
+class Totebags(models.Model):
+    precio  = models.IntegerField()
     #imagen = models.ImageField()
-    autor = models.CharField(max_length=40)
-    fecha_en_que_se_escribio= models.DateField()
+    descripcion = models.CharField(max_length=1000)
     
     def __str__(self) -> str:
-        return self.autor+" "+str(self.fecha_en_que_se_escribio)
+        return self.descripcion+" "+str(self.precio)
 
-class Actividades_comunidad (models.Model):
-    texto  = models.TextField()
+class  Mochilas(models.Model):
+    precio  = models.IntegerField()
     #imagen = models.ImageField()
-    autor = models.CharField(max_length=40)
-    fecha_en_que_se_escribio= models.DateField()
+    descripcion = models.CharField(max_length=1000)
     
     def __str__(self) -> str:
-        return self.autor+" "+str(self.fecha_en_que_se_escribio)
+        return self.descripcion+" "+str(self.precio)
+    
 
-class Informacion_sobre_mi(models.Model):
-    autor = models.CharField(max_length=40)
-    #imagen = models.ImageField()
-    texto  = models.TextField()
-    fecha= models.DateField()
+
+
     
-    def __str__(self) -> str:
-        return self.autor+" "+str(self.fecha)
 
 
 
