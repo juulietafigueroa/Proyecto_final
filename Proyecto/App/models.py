@@ -15,11 +15,12 @@ class Totebags(models.Model):
 class  Mochilas(models.Model):
     
     #imagen = models.ImageField()
-    descripcion = models.CharField(max_length=1000)
-    precio  = models.IntegerField()
-    
-    def __str__(self) -> str:
-        return self.descripcion+" "+str(self.precio)
+    descripcion = models.CharField(max_length=50)
+    precio = models.IntegerField()
+    codigo=models.IntegerField()
+
+    def __str__(self):
+        return str(self.codigo)
     
 
 

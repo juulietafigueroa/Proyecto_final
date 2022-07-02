@@ -3,8 +3,9 @@ from django import forms
 class MochilasFormulario(forms.Form):
     #texto  = forms.TextField()
     #imagen = models.ImageField()
-    descripcion = forms.CharField(max_length=1000)
+    descripcion = forms.CharField(max_length=50)
     precio= forms.IntegerField()
+    codigo=forms.IntegerField()
 
 class TotebagsFormulario (forms.Form):
     #texto  = forms.TextField()

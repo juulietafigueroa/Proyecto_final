@@ -1,0 +1,16 @@
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3> Resultado de su búsqueda  </h3>
+{% endblock%}
+{% block section_name %}
+<h1> Estamos buscando las mochilas con el código {{codigo}}</h1>
+{% if mochilass %}
+<ul>
+    {% for mochila in mochilass %}
+    <li> {{mochila.codigo }}</li>
+    <br>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -1,7 +1,10 @@
+from pydoc import describe
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from App.forms import MochilasFormulario, TotebagsFormulario 
+from App.models import Mochilas
+
 
 # Create your views here.
 
@@ -24,12 +27,15 @@ def Informacion_sobre_mi(request):
 def mochilasFormulario(request):
     if request.method == 'POST':
         miFormulario = MochilasFormulario(request.POST)
-        print(miFormulario)
+       
         if miFormulario.is_valid():
-            informacion = miFormulario.cleaned_data
+         informacion = miFormulario.cleaned_data
         descripcion=informacion['descripcion']
         precio=informacion['precio']
-        mochila = Mochilas (descripcion = descripcion, precio=precio)
+        codigo=informacion['codigo']
+      
+
+        mochila = Mochilas (descripcion = descripcion, precio=precio, codigo=codigo)
         mochila.save()
         return render(request, 'app/home.html')
     else:
@@ -51,3 +57,15 @@ def totebagsFormulario(request):
     else:
         miFormulario = TotebagsFormulario()
     return render(request, 'app/formulario_totebags.html',{'miFormulario':miFormulario})
+
+def busquedaCodigoMochilas(request):
+        return render(request, 'App/busquedaCodigoMochilas.html')
+
+def buscar(request):
+    if request.GET['codigo']:
+        codigo = request.GET['codigo']
+        mochilass = Mochilas.objects.filter(codigo=codigo)
+        return render(request, 'app/resultadosBusqueda.html', {'codigo':codigo})
+    else:
+        respuesta = "No se ha ingresado ningún código"
+    return HttpResponse(respuesta)

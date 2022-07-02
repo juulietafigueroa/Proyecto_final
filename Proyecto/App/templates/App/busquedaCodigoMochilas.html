@@ -1,0 +1,13 @@
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3> Buscador de codigo de mochilas  </h3>
+{% endblock%}
+{% block section_name %}
+<form action="{% url 'buscar'%}" method="get">
+    
+    <input type="number" name="codigo" placeholder="CODIGO" id="codigo">
+    <input type="submit" value="Buscar"><!-- el input de tipo submit es el que envia los datos-->
+
+</form>
+{% endblock %}
