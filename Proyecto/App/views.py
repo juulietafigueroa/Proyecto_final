@@ -24,35 +24,19 @@ def totebags(request):
 def Informacion_sobre_mi(request):
    return render(request, 'App/Informacion_sobre_mi.html')
 
+
+
 #def mochilasFormulario(request):
- #   if request.method == 'POST':
-  #      miFormulario = MochilasFormulario(request.POST)
-   #    
-    #    if miFormulario.is_valid():
-     #       informacion = miFormulario.cleaned_data
-      #      descripcion=informacion['descripcion']
-       #     precio=informacion['precio']
-        #    codigo=informacion['codigo']
-      
-
-         #   mochila = Mochilas (descripcion = descripcion, precio=precio, codigo=codigo)
-          #  mochila.save()
-           # return render(request, 'app/home.html')
-    #else:
-     #   miFormulario = MochilasFormulario()
-    #return render(request, 'app/formulario_mochilas.html',{'miFormulario':miFormulario})
-
-def mochilasFormulario(request):
     
-    if request.method == 'POST':
-        print(request.POST)
-        descripcion = request.POST['descripcion']
-        precio = request.POST['precio']
-        codigo = request.POST['codigo'] 
-        mochila = Mochilas ( descripcion=descripcion, precio=precio, codigo=codigo   )
-        mochila.save()
-        return render(request, 'App/home.html')
-    return render(request, 'App/formulario_mochilas.html')
+ #   if request.method == 'POST':
+  #      print(request.POST)
+   #     descripcion = request.POST['descripcion']
+    #    precio = request.POST['precio']
+     #   codigo = request.POST['codigo'] 
+      #  mochila = Mochilas ( descripcion=descripcion, precio=precio, codigo=codigo   )
+       # mochila.save()
+       # return render(request, 'App/home.html')
+    #return render(request, 'App/formulario_mochilas.html')
 
 
 def busquedaCodigoMochilas(request):
@@ -69,7 +53,30 @@ def buscar(request):
     
     return HttpResponse(respuesta)
 
-#def leerMochilas(request):
-#    mochilas = Mochilas.objects.all()
- #   contexto= {'mochilas':mochilas}
-  #  return render (request, 'app/Mochilas.html', contexto)
+#CRUD Read
+def leerMochilas(request):
+    mochilas = Mochilas.objects.all()
+    contexto= {'mochilas':mochilas}
+    return render (request, 'app/leerMochilas.html', contexto)
+
+#CRUD Create
+
+def mochilasFormulario(request):
+    if request.method == 'POST':
+        miFormulario = MochilasFormulario(request.POST)
+       
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+            descripcion=informacion['descripcion']
+            precio=informacion['precio']
+            codigo=informacion['codigo']
+      
+
+            mochila = Mochilas (descripcion = descripcion, precio=precio, codigo=codigo)
+            mochila.save()
+            return render(request, 'app/home.html')
+    else:
+        miFormulario = MochilasFormulario()
+    return render(request, 'app/formulario_mochilas.html',{'miFormulario':miFormulario})
+
+        

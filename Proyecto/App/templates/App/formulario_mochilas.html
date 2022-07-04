@@ -4,7 +4,7 @@
 <h3> Formulario para mochilas </h3>
 {% endblock%}
 {% block section_name %}
-<form action="{% url 'formularioMochilas' %}" method="post">{% csrf_token %}
+<form action="{% url 'mochilasFormulario' %}" method="post">{% csrf_token %}
     <h1> Ingrese los datos de mochilas </h1>
     <p> Descripcion: <input type="text" name="descripcion" ></p>
     <p> Precio: <input type="number" name="precio" ></p>

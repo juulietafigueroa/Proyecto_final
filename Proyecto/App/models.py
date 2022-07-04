@@ -20,8 +20,8 @@ class  Mochilas(models.Model):
     precio = models.IntegerField()
     codigo=models.IntegerField()
 
-    def __str__(self):
-        return str(self.codigo)
+    def __str__(self) -> str:
+        return self.descripcion+" "+str(self.codigo)
     
 
 

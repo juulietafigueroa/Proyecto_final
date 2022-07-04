@@ -1,14 +1,14 @@
 from unicodedata import name
 from django.urls import path
-from App.views import home, Mochilas, Totebags, Informacion_sobre_mi,   buscar, mochilasFormulario, busquedaCodigoMochilas
+from App.views import home, Mochilas, Totebags, Informacion_sobre_mi,   buscar, mochilasFormulario, busquedaCodigoMochilas, leerMochilas
 
 urlpatterns = [
     path('', home, name='home' ),
-    path('mochilas/', Mochilas, name='mochilas'  ),
+    path('Mochilas/', Mochilas, name='Mochilas'  ),
     path('totebags/', Totebags, name='totebags' ),
     path('Informacion_sobre_mi/', Informacion_sobre_mi, name='Informacion_sobre_mi' ),
-    path('formularioMochilas/', mochilasFormulario, name='formularioMochilas' ),
+    path('mochilasFormulario/', mochilasFormulario, name='mochilasFormulario' ),
     path('busquedaCodigoMochilas', busquedaCodigoMochilas, name="busquedaCodigoMochilas"),
     path('buscar/', buscar, name='buscar'),
-    #path('mochilas/', leerMochilas, name='mochilas'),
+    path('leerMochilas/', leerMochilas, name='leerMochilas'),
 ]
