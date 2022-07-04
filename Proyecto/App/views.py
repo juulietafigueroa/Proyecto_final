@@ -1,3 +1,4 @@
+from contextlib import ContextDecorator
 from pydoc import describe
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -79,4 +80,40 @@ def mochilasFormulario(request):
         miFormulario = MochilasFormulario()
     return render(request, 'app/formulario_mochilas.html',{'miFormulario':miFormulario})
 
-        
+#CRUD Delete
+def eliminarMochila(request, mochilas_codigo):
+    mochila = Mochilas.objects.get(codigo=mochilas_codigo)
+    mochila.delete()
+
+    mochilas = Mochilas.objects.all()
+    contexto = {'mochilas':mochilas}
+    return render(request, 'app/Mochilas.html', contexto)
+
+
+def editarMochila(request, mochila_codigo):
+    mochila=Mochilas.objects.get(codigo=mochila_codigo)
+
+    if request.method == 'POST':
+
+            miFormulario = MochilasFormulario(request.POST)
+            if miFormulario.is_valid():
+                informacion=miFormulario.cleaned_data
+                mochila.codigo=informacion['codigo']
+                mochila.descripcion=informacion['descripcion']
+                mochila.precio=informacion['precio']
+                mochila.save()
+
+                mochilas=Mochilas.objects.all()
+                contexto={'mochilas':mochilas}
+
+                return render(request, "app/home.html") #Vuelvo al inicio o a donde quieran
+     
+    else: 
+        miFormulario= MochilasFormulario(initial={'codigo': mochila.codigo, 'descripcion':mochila.descripcion , 'precio':mochila.precio}) 
+
+      
+    return render(request, "app/editarMochila.html", {"miFormulario":miFormulario, "mochila_codigo":mochila_codigo})
+
+                
+
+
