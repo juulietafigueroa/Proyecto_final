@@ -4,11 +4,14 @@
 <h3> Resultado de su búsqueda  </h3>
 {% endblock%}
 {% block section_name %}
-<h1> Estamos buscando las mochilas con el código {{codigo}}</h1>
-{% if mochilass %}
+<p> Estamos buscando las mochilas con el código {{codigo}} </p> 
+{% if mochilas %}
 <ul>
-    {% for mochila in mochilass %}
-    <li> {{mochila.codigo }}</li>
+    {% for mochila in mochilas %}
+    
+    <li>Precio: {{mochila.precio }}</li>
+    <li> Codigo: {{mochila.codigo }}</li>
+    <li> Descripcion: {{mochila.descripcion }}</li>
     <br>
     {% endfor %}
 </ul>

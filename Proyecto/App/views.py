@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from App.forms import MochilasFormulario, TotebagsFormulario 
-from App.models import Mochilas
+from App.models import Mochilas, Totebags
 
 
 # Create your views here.
@@ -13,59 +13,63 @@ def home(self):
     documento = plantila.render()
     return HttpResponse(documento)
 
-def Mochilas(request):
-    return render(request, 'app/mochilas.html')
+def mochilas(request):
+    return render(request, 'app/Mochilas.html')
 
 
-def Totebags(request):
+def totebags(request):
     return render(request, 'App/totebags.html')
 
 
 def Informacion_sobre_mi(request):
    return render(request, 'App/Informacion_sobre_mi.html')
 
-def mochilasFormulario(request):
-    if request.method == 'POST':
-        miFormulario = MochilasFormulario(request.POST)
-       
-        if miFormulario.is_valid():
-         informacion = miFormulario.cleaned_data
-        descripcion=informacion['descripcion']
-        precio=informacion['precio']
-        codigo=informacion['codigo']
+#def mochilasFormulario(request):
+ #   if request.method == 'POST':
+  #      miFormulario = MochilasFormulario(request.POST)
+   #    
+    #    if miFormulario.is_valid():
+     #       informacion = miFormulario.cleaned_data
+      #      descripcion=informacion['descripcion']
+       #     precio=informacion['precio']
+        #    codigo=informacion['codigo']
       
 
-        mochila = Mochilas (descripcion = descripcion, precio=precio, codigo=codigo)
-        mochila.save()
-        return render(request, 'app/home.html')
-    else:
-        miFormulario = MochilasFormulario()
-    return render(request, 'app/formulario_mochilas.html',{'miFormulario':miFormulario})
+         #   mochila = Mochilas (descripcion = descripcion, precio=precio, codigo=codigo)
+          #  mochila.save()
+           # return render(request, 'app/home.html')
+    #else:
+     #   miFormulario = MochilasFormulario()
+    #return render(request, 'app/formulario_mochilas.html',{'miFormulario':miFormulario})
 
-
-def totebagsFormulario(request):
+def mochilasFormulario(request):
+    
     if request.method == 'POST':
-        miFormulario = TotebagsFormulario(request.POST)
-        print(miFormulario)
-        if miFormulario.is_valid():
-            informacion = miFormulario.cleaned_data
-        descripcion=informacion['descripcion']
-        precio=informacion['precio']
-        totebags = Totebags (descripcion = descripcion, precio=precio)
-        totebags.save()
-        return render(request, 'app/home.html')
-    else:
-        miFormulario = TotebagsFormulario()
-    return render(request, 'app/formulario_totebags.html',{'miFormulario':miFormulario})
+        print(request.POST)
+        descripcion = request.POST['descripcion']
+        precio = request.POST['precio']
+        codigo = request.POST['codigo'] 
+        mochila = Mochilas ( descripcion=descripcion, precio=precio, codigo=codigo   )
+        mochila.save()
+        return render(request, 'App/home.html')
+    return render(request, 'App/formulario_mochilas.html')
+
 
 def busquedaCodigoMochilas(request):
-        return render(request, 'App/busquedaCodigoMochilas.html')
+    return render(request, 'App/busquedaCodigoMochilas.html')
 
 def buscar(request):
     if request.GET['codigo']:
         codigo = request.GET['codigo']
-        mochilass = Mochilas.objects.filter(codigo=codigo)
-        return render(request, 'app/resultadosBusqueda.html', {'codigo':codigo})
+        mochilas = Mochilas.objects.filter(codigo=codigo)
+        return render(request, "App/resultadosBusqueda.html", {'mochilas':mochilas, 'codigo':codigo})
+    
     else:
-        respuesta = "No se ha ingresado ningún código"
+        respuesta = "No enviaste datos"
+    
     return HttpResponse(respuesta)
+
+#def leerMochilas(request):
+#    mochilas = Mochilas.objects.all()
+ #   contexto= {'mochilas':mochilas}
+  #  return render (request, 'app/Mochilas.html', contexto)

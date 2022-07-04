@@ -6,9 +6,10 @@
 {% block section_name %}
 <form action="{% url 'formularioMochilas' %}" method="post">{% csrf_token %}
     <h1> Ingrese los datos de mochilas </h1>
-    <table>
-        {{ miFormulario.as_p }}
-    </table> 
+    <p> Descripcion: <input type="text" name="descripcion" ></p>
+    <p> Precio: <input type="number" name="precio" ></p>
+    <p> Codigo: <input type="number" name="codigo" ></p>
+
         
     <input type="submit" value="Enviar formulario con la app"> <!--el input de tipo submit es el que envia los datos-->
 

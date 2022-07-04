@@ -15,6 +15,7 @@ class Totebags(models.Model):
 class  Mochilas(models.Model):
     
     #imagen = models.ImageField()
+    
     descripcion = models.CharField(max_length=50)
     precio = models.IntegerField()
     codigo=models.IntegerField()
