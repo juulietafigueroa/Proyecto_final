@@ -1,9 +1,15 @@
 {% extends "app/padre.html" %}
 {% load static %}
 {% block contenidoQueCambia %}
-<h3> Página de Tote bags (bolsos) </h3>
+<h3> Página de mochilas  </h3>
+{% endblock%}
+{% block section_name %}
+<h3> Sección de totebags </h3>
+{% for totebag in objects_list %}
+ <li>{{totebag}}</li>
+{% endfor %}
+
+
 {% endblock %}
 
-{% block section_name %}
-<h3>Tote bags (bolsos) </h3>
-{% endblock %}
+

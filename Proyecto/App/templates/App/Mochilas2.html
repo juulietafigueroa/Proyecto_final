@@ -7,7 +7,11 @@
 <h3> Listado de mochilas </h3>
 {% for mochila in mochilas%}
  <li>{{mochila}}</li>
+ <button>
+    <a href="{% url 'eliminarMochila' mochila.codigo %}"> Eliminar </a>
+    <a href="{% url 'editarMochila' mochila.precio %}"> Editar </a>
 
+ </button>
 {% endfor %}
 {% endblock %}
 

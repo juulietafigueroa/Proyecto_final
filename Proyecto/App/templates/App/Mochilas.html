@@ -1,17 +1,16 @@
-{% extends "app/padre.html" %}
+<!--{% extends "app/padre.html" %}
 {% load static %}
 {% block contenidoQueCambia %}
 <h3> Página de mochilas  </h3>
-{% for mochila in mochilas%}
- <li>{{mochila}}</li>
-<button>
-    <a href="{% url 'eliminarMochila' mochila.codigo %}">Eliminar</a>
- </button>
-{% endfor %}h
 {% endblock%}
-
 {% block section_name %}
 <h3> Listado de mochilas </h3>
+{% for mochila in mochilas%}
+ <li>{{mochila}}</li>
+ <button>
+    <a href="{% url 'eliminarMochila' mochila.codigo %}"> Eliminar </a>
+ </button>
+{% endfor %}
+{% endblock %}-->
 
-{% endblock %}
 

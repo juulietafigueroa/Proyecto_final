@@ -1,11 +1,13 @@
 from contextlib import ContextDecorator
+from dataclasses import field
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from pydoc import describe
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from App.forms import MochilasFormulario, TotebagsFormulario 
 from App.models import Mochilas, Totebags
-
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -14,8 +16,14 @@ def home(self):
     documento = plantila.render()
     return HttpResponse(documento)
 
-def mochilas(request):
-    return render(request, 'app/Mochilas.html')
+def mochilas2(request):
+    mochilas = Mochilas.objects.all()
+    contexto= {'mochilas':mochilas}
+    return render (request, 'app/Mochilas2.html', contexto)
+
+   
+
+   
 
 
 def totebags(request):
@@ -54,11 +62,7 @@ def buscar(request):
     
     return HttpResponse(respuesta)
 
-#CRUD Read
-def leerMochilas(request):
-    mochilas = Mochilas.objects.all()
-    contexto= {'mochilas':mochilas}
-    return render (request, 'app/leerMochilas.html', contexto)
+
 
 #CRUD Create
 
@@ -81,17 +85,17 @@ def mochilasFormulario(request):
     return render(request, 'app/formulario_mochilas.html',{'miFormulario':miFormulario})
 
 #CRUD Delete
-def eliminarMochila(request, mochilas_codigo):
-    mochila = Mochilas.objects.get(codigo=mochilas_codigo)
+def eliminarMochila(request, codigo):
+    mochila = Mochilas.objects.get(codigo=codigo)
     mochila.delete()
 
     mochilas = Mochilas.objects.all()
-    contexto = {'mochilas':mochilas}
-    return render(request, 'app/Mochilas.html', contexto)
+    contexto= {'mochilas':mochilas}
+    return render (request, 'app/Mochilas2.html', contexto)
 
 
-def editarMochila(request, mochila_codigo):
-    mochila=Mochilas.objects.get(codigo=mochila_codigo)
+def editarMochila(request, precio):
+    mochila=Mochilas.objects.get(precio=precio)
 
     if request.method == 'POST':
 
@@ -106,14 +110,36 @@ def editarMochila(request, mochila_codigo):
                 mochilas=Mochilas.objects.all()
                 contexto={'mochilas':mochilas}
 
-                return render(request, "app/home.html") #Vuelvo al inicio o a donde quieran
+                return render(request, "app/Mochilas2.html", contexto) #Vuelvo al inicio o a donde quieran
      
     else: 
         miFormulario= MochilasFormulario(initial={'codigo': mochila.codigo, 'descripcion':mochila.descripcion , 'precio':mochila.precio}) 
 
-      
-    return render(request, "app/editarMochila.html", {"miFormulario":miFormulario, "mochila_codigo":mochila_codigo})
+        contexto={'miFormulario':miFormulario, 'precio':precio}
+    return render(request, "app/editarMochila.html", contexto)
 
-                
+            
+#LISTVIEW
 
+class TotebagsList(ListView):
+    model = Totebags
+    template_name='App/Totebags.html'
 
+#DETAILVIEW
+
+class TotebagsDetail(DetailView):
+    model= Totebags
+    template_name='App/totebagsDetalle.html'
+
+#CREATEVIEW
+
+class TotebagsCreacion(CreateView):
+    model=Totebags
+    successs_url= reverse_lazy('Totebags')
+    fields = ['precio', 'descripcion', 'codigo2']
+
+class TotebagsEdicion(UpdateView):
+    model=Totebags
+    successs_url= reverse_lazy('Totebags')
+    fields = ['precio', 'descripcion', 'codigo2']
+    
