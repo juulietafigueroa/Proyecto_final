@@ -1,0 +1,40 @@
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h1> Formulario - Editar Perfil</h1>
+{% endblock%}
+{% block section_name %}
+
+
+
+<h1> Modificar el perfil {{usuario}} </h1>
+
+<form action="{% url 'editarPerfil' %}" method="POST"> {% csrf_token %}
+    <table>
+        {{ formulario.as_table}}
+    </table>
+
+    <input type="submit", value="Guardar">
+
+</form>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+<h1> Formulario - Editar Perfil</h1>
+<h1> De {{usuario}} </h1>
+
+<form action="" method="POST"> {% csrf_token %}
+    <table>
+        {{ miFormulario.as_table}}
+    </table>
+
+    <input type="submit", value="Enviar">
+
+</form>

@@ -1,0 +1,22 @@
+
+
+
+
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3> Página de mochilas  </h3>
+{% endblock%}
+{% block section_name %}
+<h3> Sección de totebags </h3>
+<p> Descripcion: {{totebag.Descripcion}} </p>
+<p> Precio: {{totebag.Precio}} </p>
+
+
+<p>
+    <a href="% url 'totebags/list/' %"> Volver a la lista de totebags  </a>
+</p>
+
+{% endblock %}
+
+

@@ -1,0 +1,17 @@
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3> Página de mochilas  </h3>
+{% endblock%}
+{% block section_name %}
+<h3> Sección de totebags </h3>
+<form method="POST">{% csrf_token %}
+    ¿Estas seguro de eliminar la totebag "{{object}}" ?
+    <input type="submit", value="SI"/>
+
+</form>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,27 @@
+{% extends "app/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3> Página de Totebags  </h3>
+{% endblock%}
+
+{% block section_name %}
+    <h3> Seccion de totebags</h3>
+    {% for totebag in object_list %}
+        <li> {{totebag}} </li>
+        <p>
+            <a href="{% url 'totebag_detalle' totebag.id %}"> Ver </a>
+            
+        </p> 
+        <p> <a href="{% url 'totebag_editar' totebag.id %}"> Editar </a> </p>
+        <p> <a href="{% url 'totebags_borrar' totebag.id %}"> Borrar </a> </p>
+
+    {% endfor %}
+
+  
+        <a href="{% url 'totebag_crear' %}">Crear </a>
+    
+
+{% endblock %}
+
+
+

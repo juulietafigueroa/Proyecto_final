@@ -1,13 +1,21 @@
 from contextlib import ContextDecorator
 from dataclasses import field
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+import imp
+from xml.etree.ElementTree import QName
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from pydoc import describe
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from App.forms import MochilasFormulario, TotebagsFormulario 
+from App.forms import MochilasFormulario, TotebagsFormulario, UserRegisterForm, UserEditForm
+
 from App.models import Mochilas, Totebags
 from django.urls import reverse_lazy
+#LOGIN
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -21,13 +29,16 @@ def mochilas2(request):
     contexto= {'mochilas':mochilas}
     return render (request, 'app/Mochilas2.html', contexto)
 
-   
-
-   
-
-
 def totebags(request):
-    return render(request, 'App/totebags.html')
+    totebagss = Totebags.objects.all()
+    contexto= {'totebag':totebagss}
+    return render (request, 'app/Totebags.html', contexto)
+   
+
+   
+
+
+
 
 
 def Informacion_sobre_mi(request):
@@ -123,23 +134,113 @@ def editarMochila(request, precio):
 
 class TotebagsList(ListView):
     model = Totebags
-    template_name='App/Totebags.html'
+    template_name='App/Totebag_list.html'
 
 #DETAILVIEW
 
-class TotebagsDetail(DetailView):
+class TotebagDetalle(DetailView):
     model= Totebags
-    template_name='App/totebagsDetalle.html'
+    template_name='App/Totebag_detalle.html'
 
 #CREATEVIEW
 
-class TotebagsCreacion(CreateView):
+class TotebagCreacion(CreateView):
     model=Totebags
-    successs_url= reverse_lazy('Totebags')
-    fields = ['precio', 'descripcion', 'codigo2']
+    successs_url= reverse_lazy('totebags_list')
+    fields = ['precio', 'descripcion']
 
-class TotebagsEdicion(UpdateView):
+class TotebagEdicion(UpdateView):
     model=Totebags
-    successs_url= reverse_lazy('Totebags')
-    fields = ['precio', 'descripcion', 'codigo2']
+    successs_url= reverse_lazy('totebags_list')
+    fields = ['precio', 'descripcion']
     
+class TotebagEliminacion(DeleteView):
+    model=Totebags
+    successs_url= reverse_lazy('totebags_list')
+    
+#-------------------------
+#LOGIN
+
+def login_request(request):
+
+
+        if request.method == "POST":
+            form = AuthenticationForm(request, request.POST)
+
+            if form.is_valid():
+                  usuario = form.cleaned_data.get('username')
+                  clave = form.cleaned_data.get('password')
+
+                  user = authenticate(username=usuario, password=clave)
+
+            
+                  if user is not None:
+                        login(request, user)
+                       
+                        return render(request,"App/home.html",  {"mensaje":f"Bienvenido {usuario}"} )
+                  else:
+                        
+                        return render(request,"App/home.html", {"mensaje":"Error, datos incorrectos"} )
+
+            else:
+                        
+                        return render(request,"App/home.html" ,  {"mensaje":"Error, datos incorrectos"})
+        else:
+         form = AuthenticationForm()
+
+         return render(request,"App/login.html", {'form':form} )
+
+
+
+#REGISTER 
+
+def register_request(request):
+
+      if request.method == 'POST':
+
+            
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+
+                  username = form.cleaned_data['username']
+                  form.save()
+                  return render(request,'App/home.html' ,  {'mensaje': f'Usuario {username} creado'})
+            else:
+                return render(request, 'App/home.html', {'mensaje': 'Error, no se pudo crear el usuario'})
+
+      else:
+                  
+            form = UserRegisterForm()     
+
+      return render(request,"App/register.html" ,  {"form":form})
+
+ 
+
+
+def editarPerfil(request):
+
+      #Instancia del login
+      usuario = request.user
+     
+      #Si es metodo POST hago lo mismo que el agregar
+      if request.method == 'POST':
+            formulario = UserEditForm(request.POST, instance=usuario) 
+            if formulario.is_valid:   #Si pasó la validación de Django
+
+                informacion = formulario
+            
+                #Datos que se modificarán
+                usuario.email = informacion['email']
+                usuario.password1 = informacion['password1']
+                usuario.password2 = informacion['password1']
+                usuario.save()
+
+                return render(request, "App/home.html", {'usuario':usuario, 'mensaje': 'Datos cambiados exitosamente'}) #Vuelvo al inicio o a donde quieran
+      #En caso que no sea post
+      else: 
+            #Creo el formulario con los datos que voy a modificar
+            formulario= UserEditForm(initial={ 'email':usuario.email}) 
+
+      #Voy al html que me permite editar
+      return render(request, "App/editarPerfil.html", {"formulario":formulario, "usuario":usuario.username})
+
